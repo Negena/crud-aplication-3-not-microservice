@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <ul>
+      <% for (let dt of data) { %>
+          <li>
+            <strong>name:</strong>
+          <a href="/user/<%= dt._id%>">
+             <%= dt.name %> </a></li>
+        <% } %>
+        <a href="/">create another user</a>
+    </ul>
+
+  </body>
+</html>
