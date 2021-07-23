@@ -108,6 +108,7 @@ app.get("/edit/:id", (req,res) => {
 });
 
 app.post("/edit/:id", (req,res) => {
+  let id = req.params.id;
   const data = {};
   data.name = req.body.name,
   data.age = req.body.age,
@@ -118,7 +119,7 @@ app.post("/edit/:id", (req,res) => {
   User.findOneAndUpdate(query, data, function(err){
     if (err) throw err;
     else
-    res.redirect("/all")
+    res.redirect("/user/"+req.params.id);
   })
 })
 
