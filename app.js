@@ -98,18 +98,29 @@ app.delete("/del/:id", (req,res) => {
   });
 });
 
-app.patch("/del/:id", (req,res) => {
-  const id = req.params.id;
-  const updates = {};
-  for (const up of req.body){
-    updates[up.propName] = op.value;
-  };
-  User.update({id: id}, {$set: updates}, function(err){
-    if (err) throw err ;
-    else
-    res.redirect("/user/:id");
-  });
+app.get("/edit/:id", (req,res) => {
+  let id = req.params.id;
+   User.findById(req.params.id, function(err, data){
+     if (err) throw err ;
+     else
+     res.render("edit.ejs", {data: data});
+   });
 });
+
+app.post("/edit/:id", (req,res) => {
+  const data = {};
+  data.name = req.body.name,
+  data.age = req.body.age,
+  data.about = req.body.about,
+  data.number = req.body.number
+
+  let query = {_id: req.params.id};
+  User.findOneAndUpdate(query, data, function(err){
+    if (err) throw err;
+    else
+    res.redirect("/all")
+  })
+})
 
 app.listen(3000, () => {
   console.log("works....")
