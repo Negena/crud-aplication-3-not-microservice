@@ -10,7 +10,8 @@ app.set("view engine", "ejs");
 
 mongoose.connect("mongodb+srv://user1:useronce@cluster0.txaa5.mongodb.net/getData", {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  useFindAndModify: false
 }, function(err){
   if (err) throw err ;
   else console.log('db connected');
@@ -19,7 +20,9 @@ mongoose.connect("mongodb+srv://user1:useronce@cluster0.txaa5.mongodb.net/getDat
 const UsersSchema = new mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
   name: String,
-  age: Number
+  age: Number,
+  about: String,
+  number: Number
 });
 
 let User = mongoose.model('User', UsersSchema);
@@ -33,7 +36,9 @@ app.post('/', (req,res) => {
    const newUser = new User({
      _id : new mongoose.Types.ObjectId(),
      name: req.body.name,
-     age: req.body.age
+     age: req.body.age,
+     about: req.body.about,
+     number: req.body.number
    });
    newUser.save()
    res.render("send.ejs", {data: newUser});
@@ -64,7 +69,6 @@ app.get("/:id", (req,res) => {
     if (err) throw err;
     else
     res.send(data);
-    console.log(data)
   });
 })
 
@@ -74,10 +78,38 @@ app.get("/user/:id", (req,res) => {
      if (err) throw err ;
      else
      res.render("user.ejs", {data: data});
-     console.log(data);
    });
 });
 
+app.use( function( req, res, next ) {
+    if ( req.query._method == 'DELETE' ) {
+        req.method = 'DELETE';
+        req.url = req.path;
+    }
+    next();
+});
+
+app.delete("/del/:id", (req,res) => {
+  let id = req.params.id;
+  User.findByIdAndRemove(id, function(err){
+    if (err) throw err ;
+    else
+    res.redirect("/all");
+  });
+});
+
+app.patch("/del/:id", (req,res) => {
+  const id = req.params.id;
+  const updates = {};
+  for (const up of req.body){
+    updates[up.propName] = op.value;
+  };
+  User.update({id: id}, {$set: updates}, function(err){
+    if (err) throw err ;
+    else
+    res.redirect("/user/:id");
+  });
+});
 
 app.listen(3000, () => {
   console.log("works....")

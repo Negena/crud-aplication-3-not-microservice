@@ -8,7 +8,15 @@
     <h2>name: <%= data.name %></h2>
     <h2>age: <%= data.age %></h2>
     <h2>id: <%= data._id %></h2>
+    <h2>contact: <%= data.number%></h2>
+    <h2>about: <%= data.about %></h2>
 
+        <a href="/del/<%= data._id %>?_method=DELETE"><button id="del">
+          delete
+        </button></a>
+        <a href="/edit/<%= data._id%>"><button id="edit">
+          edit
+        </button></a>
     <a href="/all">see all users</a>
     <br><br>
     <a href="/">create another user</a>
