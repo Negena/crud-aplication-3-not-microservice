@@ -29,7 +29,7 @@ let User = mongoose.model('User', UsersSchema);
 
 
 app.get("/", (req,res) => {
-  res.sendFile("index.html", {root: __dirname});
+  res.render("index");
 });
 
 app.post('/', (req,res) => {

@@ -1,25 +1,23 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
+<%- include("./partials/header.ejs") %>
   <body>
     <p>hi</p>
-    <h3> name: <%= data.name %></h3>
-    <h3>age: <%= data.age %></h3>
-    <h3>about:  <%= data.about %></h3>
-    <h3>contact: <%= data.number %></h3>
+    <h3> <strong><i>name: </i> </strong><%= data.name %></h3>
+    <br>
+    <h3><strong><i>age:  </i></strong> <%= data.age %></h3>
+    <br>
+    <h3><strong><i>about:  </i></strong>  <%= data.about %></h3>
+    <br>
+    <h3><strong><i>contact: </i></strong> <%= data.number %></h3>
+    <br>
 
-    <br><br>
-    <a href="/del/<%= data._id %>?_method=DELETE"><button id="del">
+    <br>
+    <a href="/del/<%= data._id %>?_method=DELETE"><button id="del" class="btn btn-outline-danger">
       delete
     </button></a>
-    <a href="/edit/<%= data._id%>"><button id="edit">
+    <a href="/edit/<%= data._id%>"><button id="edit" class="btn btn-outline-warning">
       edit
     </button></a>
   <br><br>
     <a href="/all">see all users</a>
     <a href="/">create another user</a>
-  </body>
-</html>
+    <%- include("./partials/footer.ejs") %>
