@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.set("view engine", "ejs");
 
-mongoose.connect("mongodb+srv://user1:useronce@cluster0.txaa5.mongodb.net/getData", {
+mongoose.connect(proccess.env.DB, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false
